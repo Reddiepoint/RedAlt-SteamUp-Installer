@@ -6,6 +6,12 @@ mod modules;
 
 
 fn main() {
+    let args = std::env::args().collect::<Vec<String>>();
+    if args.len() > 1 && args[1] == "--version" {
+        println!("{}", env!("CARGO_PKG_VERSION"));
+        return;
+    }
+
     println!("This is the companion installer for RedAlt-Steam-Update-Creator.\n\
     Enter \"help\" to get a list of commands. Enter \"update\" to start the update process.");
     let mut settings = Settings::default();
