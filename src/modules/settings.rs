@@ -152,13 +152,14 @@ impl Settings {
                 if self.remove_files {
                     self.remove_files(&mut changes);
                 }
+
+                println!("Finished updating. Type \"exit\" to close the program.");
             },
             _ => {
                 println!("Cancelled update.");
             }
         };
 
-        println!("Finished updating.");
     }
 
     fn copy_files(&self, changes: &mut Changes) {
