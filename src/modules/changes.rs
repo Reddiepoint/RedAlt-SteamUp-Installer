@@ -4,6 +4,8 @@ use serde::Deserialize;
 #[derive(Clone, Default, Deserialize)]
 pub struct Changes {
     #[serde(default)]
+    pub name: String,
+    #[serde(default)]
     pub app: String,
     #[serde(default)]
     pub depot: String,

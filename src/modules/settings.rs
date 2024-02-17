@@ -219,14 +219,23 @@ impl Settings {
             None => return
         };
 
-        println!("Changes for {} (Depot {} - Manifest {}):", changes.app, changes.depot, changes.manifest);
+        println!("Changes for {} ({}):", changes.name, changes.app);
         println!("Initial Build: {}+", changes.initial_build);
         println!("Final Build: {}", changes.final_build);
+        println!("Depot: {}", changes.depot);
+        println!("Manifest: {}", changes.manifest);
         let display_vec = |vec: &Vec<String>| {
             vec.iter().map(|value| format!("  {}", value)).collect::<Vec<String>>().join("\n")
         };
-        println!("Added:\n{}", display_vec(&changes.added));
-        println!("Removed:\n{}", display_vec(&changes.removed));
-        println!("Modified:\n{}", display_vec(&changes.modified));
+
+        if !changes.added.is_empty() {
+            println!("Added:\n{}", display_vec(&changes.added));
+        }
+        if !changes.removed.is_empty() {
+            println!("Removed:\n{}", display_vec(&changes.removed));
+        }
+        if !changes.modified.is_empty() {
+            println!("Modified:\n{}", display_vec(&changes.modified));
+        }
     }
 }
