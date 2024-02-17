@@ -137,8 +137,7 @@ impl Settings {
         match input.to_lowercase().as_str() {
             "y" | "yes" => {
                 if self.create_backup {
-                    let backup_directory = self.game_directory.as_ref().unwrap().to_str().unwrap().to_string()
-                        + "\\.Backup";
+                    let backup_directory = self.game_directory.as_ref().unwrap().join(".Backup");
                     self.backup_directory = Some(backup_directory.into());
                     if let Err(error) = create_dir(self.backup_directory.as_ref().unwrap()) {
                         if error.kind() != ErrorKind::AlreadyExists {
@@ -172,10 +171,10 @@ impl Settings {
             }
 
             println!("Copying {} to {}", path, self.game_directory.as_ref().unwrap().file_name().unwrap().to_str().unwrap());
-            let new_file = self.files_directory.as_ref().unwrap().to_str().unwrap().to_string() + "\\" + path;
-            let old_file = self.game_directory.as_ref().unwrap().to_str().unwrap().to_string() + "\\" + path;
+            let new_file = self.files_directory.as_ref().unwrap().join(path);
+            let old_file = self.game_directory.as_ref().unwrap().join(path);
             if self.create_backup {
-                let backup_file = self.backup_directory.as_ref().unwrap().to_str().unwrap().to_string() + "\\" + path;
+                let backup_file = self.backup_directory.as_ref().unwrap().join(path);
                 if let Err(error) = std::fs::copy(&old_file, backup_file) {
                     if error.kind() == ErrorKind::PermissionDenied {
                         println!("Error copying to backup folder: {}", error);
@@ -195,9 +194,9 @@ impl Settings {
     fn remove_files(&self, changes: &mut Changes) {
         for path in &changes.removed {
             println!("Removing {} from {}", path, self.game_directory.as_ref().unwrap().file_name().unwrap().to_str().unwrap());
-            let old_file = self.game_directory.as_ref().unwrap().to_str().unwrap().to_string() + "\\" + path;
+            let old_file = self.game_directory.as_ref().unwrap().join(path);
             if self.create_backup {
-                let backup_file = self.backup_directory.as_ref().unwrap().to_str().unwrap().to_string() + "\\" + path;
+                let backup_file = self.backup_directory.as_ref().unwrap().join(path);
                 if let Err(error) = std::fs::copy(&old_file, backup_file) {
                     if error.kind() == ErrorKind::PermissionDenied {
                         println!("Error copying to backup folder: {}", error);
