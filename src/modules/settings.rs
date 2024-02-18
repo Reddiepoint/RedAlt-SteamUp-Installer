@@ -159,7 +159,6 @@ impl Settings {
                 println!("Cancelled update.");
             }
         };
-
     }
 
     fn copy_files(&self, changes: &mut Changes) {
@@ -176,6 +175,7 @@ impl Settings {
             let old_file = self.game_directory.as_ref().unwrap().join(path);
             if self.create_backup {
                 let backup_file = self.backup_directory.as_ref().unwrap().join(path);
+                let _ = std::fs::create_dir_all(backup_file.parent().unwrap());
                 if let Err(error) = std::fs::copy(&old_file, backup_file) {
                     if error.kind() == ErrorKind::PermissionDenied {
                         println!("Error copying to backup folder: {}", error);
@@ -183,6 +183,8 @@ impl Settings {
                     }
                 }
             }
+
+            let _ = std::fs::create_dir_all(old_file.parent().unwrap());
             if let Err(error) = std::fs::copy(&new_file, &old_file) {
                 if error.kind() == ErrorKind::PermissionDenied {
                     println!("Error copying to game folder: {}", error);
@@ -198,6 +200,7 @@ impl Settings {
             let old_file = self.game_directory.as_ref().unwrap().join(path);
             if self.create_backup {
                 let backup_file = self.backup_directory.as_ref().unwrap().join(path);
+                let _ = std::fs::create_dir_all(backup_file.parent().unwrap());
                 if let Err(error) = std::fs::copy(&old_file, backup_file) {
                     if error.kind() == ErrorKind::PermissionDenied {
                         println!("Error copying to backup folder: {}", error);
