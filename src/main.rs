@@ -5,17 +5,27 @@ use crate::modules::settings::Settings;
 mod modules;
 
 
+const SOURCE: &str = "https://github.com/Reddiepoint/RedAlt-Steam-Update-Installer";
+
 fn main() {
     let args = std::env::args().collect::<Vec<String>>();
-    if args.len() > 1 && args[1] == "--version" {
-        println!("{}", env!("CARGO_PKG_VERSION"));
-        return;
+    if args.len() > 1 {
+        if args[0] == "--version" {
+            println!("{}", env!("CARGO_PKG_VERSION"));
+            return;
+        } else if args[0] == "--help" {
+            println!("Run the application to get started. This program requires \
+            read, write and execute permissions");
+        }
     }
 
     println!("This is the companion installer for RedAlt-Steam-Update-Creator.\n\
-    Enter \"help\" to get a list of commands. Enter \"update\" to start the update process.");
+    Version: v{}. See {} for the source code.\n\
+    Enter \"help\" to get a list of commands. Enter \"update\" to update the game files.",
+             env!("CARGO_PKG_VERSION"), SOURCE);
     let mut settings = Settings::default();
-    println!("\n{}", settings);
+
+    println!("\n\nCurrent settings:\n{}", settings);
 
     loop {
         let input = get_input(">>");

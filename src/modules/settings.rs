@@ -45,7 +45,6 @@ impl Default for Settings {
 
 impl Display for Settings {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-        writeln!(f, "Current settings:")?;
         writeln!(f, "Using changes file (changes_file): {}", match &self.changes_file {
             Some(path) => path.to_str().unwrap(),
             None => "None",
