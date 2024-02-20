@@ -31,13 +31,13 @@ jobs:
       - name: Zip executable
         run: |
           cd target/release
-          7z a -mx9 RedAlt-Steam-Update-Installer.zip RedAlt-Steam-Update-Installer.exe
+          7z a -mx9 RedAlt-SteamUp-Installer.zip RedAlt-SteamUp-Installer.exe
 
       - name: Release
         uses: softprops/action-gh-release@v1
         if: startsWith(github.ref, 'refs/tags/')
         with:
-          files: target/release/RedAlt-Steam-Update-Installer.zip
+          files: target/release/RedAlt-SteamUp-Installer.zip
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
@@ -56,18 +56,18 @@ jobs:
           override: true
 
       - name: Build
-        run: cargo build --all --release && strip target/release/RedAlt-Steam-Update-Installer && mv target/release/RedAlt-Steam-Update-Installer target/release/RedAlt-Steam-Update-Installer_amd64
+        run: cargo build --all --release && strip target/release/RedAlt-SteamUp-Installer && mv target/release/RedAlt-SteamUp-Installer target/release/RedAlt-SteamUp-Installer_amd64
 
       - name: Zip executable
         run: |
           cd target/release
-          zip -9 RedAlt-Steam-Update-Installer_amd64.zip RedAlt-Steam-Update-Installer_amd64
+          zip -9 RedAlt-SteamUp-Installer_amd64.zip RedAlt-SteamUp-Installer_amd64
 
       - name: Release
         uses: softprops/action-gh-release@v1
         if: startsWith(github.ref, 'refs/tags/')
         with:
-          files: target/release/RedAlt-Steam-Update-Installer_amd64.zip
+          files: target/release/RedAlt-SteamUp-Installer_amd64.zip
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
@@ -87,17 +87,17 @@ jobs:
           override: true
 
       - name: Build for mac
-        run: cargo build --all --release && strip target/release/RedAlt-Steam-Update-Installer && mv target/release/RedAlt-Steam-Update-Installer target/release/RedAlt-Steam-Update-Installer_darwin
+        run: cargo build --all --release && strip target/release/RedAlt-SteamUp-Installer && mv target/release/RedAlt-SteamUp-Installer target/release/RedAlt-SteamUp-Installer_darwin
 
       - name: Zip executable
         run: |
           cd target/release
-          zip -9 RedAlt-Steam-Update-Installer_darwin.zip RedAlt-Steam-Update-Installer_darwin
+          zip -9 RedAlt-SteamUp-Installer_darwin.zip RedAlt-SteamUp-Installer_darwin
 
       - name: Release
         uses: softprops/action-gh-release@v1
         if: startsWith(github.ref, 'refs/tags/')
         with:
-          files: target/release/RedAlt-Steam-Update-Installer_darwin.zip
+          files: target/release/RedAlt-SteamUp-Installer_darwin.zip
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

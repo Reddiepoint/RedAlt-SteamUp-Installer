@@ -5,7 +5,8 @@ use crate::modules::settings::Settings;
 mod modules;
 
 
-const SOURCE: &str = "https://github.com/Reddiepoint/RedAlt-Steam-Update-Installer";
+const SOURCE: &str = "https://github.com/Reddiepoint/RedAlt-SteamUp-Installer";
+const DOCUMENTATION: &str = "https://reddiepoint.github.io/RedAlt-Steam-Update-Documentation/using-the-installer.html";
 
 fn main() {
     let args = std::env::args().collect::<Vec<String>>();
@@ -19,10 +20,11 @@ fn main() {
         return;
     }
 
-    println!("This is the companion installer for RedAlt-Steam-Update-Creator.\n\
+    println!("This is the companion installer for RedAlt SteamUp Creator.\n\
     Version: v{}. See {} for the source code.\n\
-    Enter \"help\" to get a list of commands. Enter \"update\" to update the game files.",
-             env!("CARGO_PKG_VERSION"), SOURCE);
+    Enter \"help\" to get a list of commands. Enter \"update\" to update the game files.\n\
+    For more information, see {}.",
+             env!("CARGO_PKG_VERSION"), SOURCE, DOCUMENTATION);
     let mut settings = Settings::default();
 
     println!("\n\nCurrent settings:\n{}", settings);

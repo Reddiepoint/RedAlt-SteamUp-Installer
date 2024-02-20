@@ -3,8 +3,8 @@
 version = 3
 
 [[package]]
-name = "RedAlt-Steam-Update-Installer"
-version = "0.4.5"
+name = "RedAlt-SteamUp-Installer"
+version = "0.4.6"
 dependencies = [
  "serde",
  "serde_json",
