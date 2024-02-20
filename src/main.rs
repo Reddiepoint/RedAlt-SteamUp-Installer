@@ -10,13 +10,13 @@ const SOURCE: &str = "https://github.com/Reddiepoint/RedAlt-Steam-Update-Install
 fn main() {
     let args = std::env::args().collect::<Vec<String>>();
     if args.len() > 1 {
-        if args[0] == "--version" {
+        if args[1] == "--version" {
             println!("{}", env!("CARGO_PKG_VERSION"));
-            return;
-        } else if args[0] == "--help" {
+        } else if args[1] == "--help" {
             println!("Run the application to get started. This program requires \
-            read, write and execute permissions");
+            read, write and execute permissions.");
         }
+        return;
     }
 
     println!("This is the companion installer for RedAlt-Steam-Update-Creator.\n\
