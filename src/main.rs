@@ -6,7 +6,7 @@ mod modules;
 
 
 const SOURCE: &str = "https://github.com/Reddiepoint/RedAlt-SteamUp-Installer";
-const DOCUMENTATION: &str = "https://reddiepoint.github.io/RedAlt-Steam-Update-Documentation/using-the-installer.html";
+const DOCUMENTATION: &str = "https://reddiepoint.github.io/RedAlt-SteamUp-Documentation/using-the-installer.html";
 
 fn main() {
     let args = std::env::args().collect::<Vec<String>>();
