@@ -15,7 +15,8 @@ fn main() {
             println!("{}", env!("CARGO_PKG_VERSION"));
         } else if args[1] == "--help" {
             println!("Run the application to get started. This program requires \
-            read, write and execute permissions.");
+            read, write and execute permissions.\n\
+            See {} for more information.", DOCUMENTATION);
         }
         return;
     }
