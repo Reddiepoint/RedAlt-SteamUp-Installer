@@ -40,7 +40,8 @@ fn main() {
             "set" => settings.modify_fields(input),
             "settings" => println!("{}", settings),
             "update" => settings.update_game(),
-            _ => println!("Command not recognised. Type \"help\" for a list of commands."),
+            "validate" => settings.validate(input),
+            _ => eprintln!("Command not recognised. Type \"help\" for a list of commands."),
         }
     }
 }
@@ -54,7 +55,7 @@ pub fn get_input(prompt: &str) -> String {
     return line.trim().to_string()
 }
 
-fn get_help(input: String) {
+fn get_help(_input: String) {
     /*let input = input.split(' ').collect::<Vec<&str>>();
     match input.get(1) {
         None => {}
@@ -64,12 +65,13 @@ fn get_help(input: String) {
     help.insert("changes", "Show the changelog.");
     help.insert("exit", "Exit the program.");
     help.insert("help", "Show help for the given command.");
-    help.insert("set <field> <value>", "Set the given field to the given value.\
+    help.insert("set <field> <value>", "Set the given field to the given value. \
     To see available fields, type \"settings\".");
     help.insert("settings", "Get the current settings.");
     help.insert("update", "Update the game files.");
+    help.insert("validate <\"update\" | \"game\">", "Validate the update files or the game files.");
 
     for (key, value) in help {
-        println!("{}: {}", key, value);
+        println!("{:25} {}", key, value);
     }
 }

@@ -27,20 +27,20 @@ impl Changes {
                 match std::fs::read_to_string(file) {
                     Ok(changes) => changes,
                     Err(error) => {
-                        println!("Error reading changes file: {}", error);
+                        eprintln!("Error reading changes file: {}", error);
                         return None;
                     }
                 }
             },
             None => {
-                println!("Provide a changes file.");
+                eprintln!("Provide a changes file.");
                 return None;
             }
         };
         match serde_json::from_str::<Changes>(&changes) {
             Ok(changes) => Some(changes),
             Err(error) => {
-                println!("Error parsing changes file: {}", error);
+                eprintln!("Error parsing changes file: {}", error);
                 None
             }
         }
