@@ -78,8 +78,14 @@ impl Display for Settings {
             Some(path) => path.to_str().unwrap(),
             None => "None",
         })?;
-        writeln!(f, "{:spacing$} {}", "Validate update files (validate_update):", self.validate_update)?;
-        writeln!(f, "{:spacing$} {}", "Validate game files (validate_game):", self.validate_game)?;
+        writeln!(f, "{:spacing$} {}", "Validate update files (validate_update):", match &self.manifest_file {
+            Some(_) => self.validate_update.to_string(),
+            None => "Disabled (requires manifest file)".to_string(),
+        })?;
+        writeln!(f, "{:spacing$} {}", "Validate game files (validate_game):", match &self.manifest_file {
+            Some(_) => self.validate_game.to_string(),
+            None => "Disabled (requires manifest file)".to_string(),
+        })?;
         writeln!(f, "{:spacing$} {}", "Create backup (create_backup):", self.create_backup)?;
         writeln!(f, "{:spacing$} {}", "Copy files (copy_files):", self.copy_files)?;
         write!(f, "{:spacing$} {}", "Remove files (remove_files):", self.remove_files)?;
@@ -192,18 +198,18 @@ impl Settings {
                  self.changes_file.as_ref().unwrap().file_name().unwrap().to_str().unwrap());
         println!("{}", self);
 
-        let input = get_input("Continue? [y/N] ");
+        let input = get_input("Continue? [y/N]: ");
         match input.to_lowercase().as_str() {
             "y" | "yes" => {
-                if self.validate_update {
+                if self.validate_update && self.manifest_file.is_some() {
                     let manifest = Manifest::parse_manifest(&self.manifest_file);
                     let manifest = match manifest {
                         Some(manifest) => manifest,
                         None => return,
                     };
-                    let all_ok = manifest.validate_files(self.update_directory.as_ref().unwrap(), Some(changes.clone()));
-                    if let Err(_) = all_ok {
-                        let input = get_input("Continue? [y/N] ");
+                    let validation = manifest.validate_files(self.update_directory.as_ref().unwrap(), Some(changes.clone()));
+                    if validation.is_err() {
+                        let input = get_input("Continue? [y/N]: ");
                         match input.to_lowercase().as_str() {
                             "y" | "yes" => {},
                             _ => {
@@ -231,13 +237,13 @@ impl Settings {
                     self.remove_files(&mut changes);
                 }
 
-                if self.validate_game {
+                if self.validate_game && self.manifest_file.is_some() {
                     let manifest = Manifest::parse_manifest(&self.manifest_file);
                     let manifest = match manifest {
                         Some(manifest) => manifest,
                         None => return,
                     };
-                    let all_ok = manifest.validate_files(self.game_directory.as_ref().unwrap(), None);
+                    let validation = manifest.validate_files(self.game_directory.as_ref().unwrap(), None);
                 }
                 println!("Finished updating. Type \"exit\" to close the program.");
             },

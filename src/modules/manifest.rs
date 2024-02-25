@@ -1,6 +1,6 @@
 use std::fmt::Display;
 use std::fs::File;
-use std::path::PathBuf;
+use std::path::{Path, PathBuf};
 use sha1::{Digest, Sha1};
 use crate::modules::changes::Changes;
 
@@ -71,7 +71,7 @@ impl Manifest {
         }
     }
 
-    pub fn validate_files(&self, directory: &PathBuf, changes: Option<Changes>) -> Result<(), ()> {
+    pub fn validate_files(&self, directory: &Path, changes: Option<Changes>) -> Result<(), ()> {
         println!("Validating {}", directory.display());
         let mut hasher = Sha1::new();
         let mut bad_files = vec![];
@@ -85,9 +85,9 @@ impl Manifest {
                 let mut new_files = vec![];
                 new_files.append(&mut changes.added);
                 new_files.append(&mut changes.modified);
-                let files: Vec<GameFile> = self.files.iter().cloned()
-                    .filter(|game_file| new_files.contains(&game_file.name))
-                    .map(|game_file| game_file.clone())
+                let files: Vec<GameFile> = self.files.iter()
+                    .filter(|&game_file| new_files.contains(&game_file.name))
+                    .cloned()
                     .collect();
                 files
             },
