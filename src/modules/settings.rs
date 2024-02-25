@@ -155,11 +155,11 @@ impl Settings {
                     None
                 }
             },
-            "validate_update_files" => match parse_bool(&value) {
+            "validate_update" => match parse_bool(&value) {
                 Some(value) => { self.validate_update = value },
                 None => { eprintln!("Invalid value") }
             },
-            "validate_game_files" => match parse_bool(&value) {
+            "validate_game" => match parse_bool(&value) {
                 Some(value) => { self.validate_game = value },
                 None => { eprintln!("Invalid value") }
             }
