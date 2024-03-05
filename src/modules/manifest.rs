@@ -5,7 +5,7 @@ use sha1::{Digest, Sha1};
 use crate::modules::changes::Changes;
 
 
-#[derive(Clone)]
+#[derive(Debug, Clone)]
 pub struct GameFile {
     pub hash: String,
     pub name: String,
@@ -86,7 +86,7 @@ impl Manifest {
                 new_files.append(&mut changes.added);
                 new_files.append(&mut changes.modified);
                 let files: Vec<GameFile> = self.files.iter()
-                    .filter(|&game_file| new_files.contains(&game_file.name))
+                    .filter(|&game_file| new_files.contains(&game_file.name.replace('\\', "/")))
                     .cloned()
                     .collect();
                 files
