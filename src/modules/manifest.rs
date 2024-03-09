@@ -127,7 +127,7 @@ impl Manifest {
 
         println!("{} files checked, {} successes, {} mismatches, {} missing.", total, successes, mismatches, missing);
         if !bad_files.is_empty() {
-            println!("Bad files:\n{}", bad_files.join("\n  "));
+            println!("Bad files:\n  {}", bad_files.join("\n  "));
             Err(())
         } else {
             Ok(())
@@ -161,7 +161,7 @@ fn parse_manifest_viewer_manifest(manifest: &str) -> Option<Vec<GameFile>> {
             if let Some(name) = parts.get(1..) {
                 let game_file = GameFile::new(
                     hash.to_string(),
-                    name.join("").replace('*', "").to_string());
+                    name.join(" ").replace('*', "").to_string());
                 game_files.push(game_file);
             }
         }
